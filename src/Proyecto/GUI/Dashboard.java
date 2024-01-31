@@ -4,6 +4,8 @@ import Proyecto.Utilidades.ResizeImg;
 import Proyecto.Clases.Usuario;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
+import java.awt.event.MouseListener;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -45,6 +47,8 @@ public class Dashboard extends javax.swing.JFrame {
                 this.jlbliconUsuario.setEnabled(false);
                 this.jLblUsuarios.setText("");
                 this.jLblUsuarios.setEnabled(false);
+                quitarEventoLabel(jlbliconUsuario);
+                quitarEventoLabel(jLblUsuarios);
                 break;
             default:
                 System.err.println("ERROR!");
@@ -382,6 +386,12 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jlblCerrarSesionMousePressed
 
+    private void quitarEventoLabel(JLabel label) {
+        for (MouseListener listener : label.getMouseListeners()) {
+            label.removeMouseListener(listener);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
