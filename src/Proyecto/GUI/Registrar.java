@@ -13,7 +13,8 @@ public class Registrar extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         TextPrompt placeholder1 = new TextPrompt("Usuario", this.jtxtUsuario);
-        TextPrompt placeholder2 = new TextPrompt("Contraseña", this.jpassClave);
+        TextPrompt placeholder2 = new TextPrompt("Correo", this.jtxtCorreo);
+        TextPrompt placeholder3 = new TextPrompt("Contraseña", this.jpassClave);
         this.usuarios = this.usuarios.getInstancia();
     }
 
@@ -27,6 +28,8 @@ public class Registrar extends javax.swing.JFrame {
         jpassClave = new javax.swing.JPasswordField();
         jbtnAtras = new javax.swing.JButton();
         jbtnAceptar = new javax.swing.JButton();
+        jtxtCorreo = new javax.swing.JTextField();
+        jcbCorreo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,7 +52,7 @@ public class Registrar extends javax.swing.JFrame {
                 jpassClaveActionPerformed(evt);
             }
         });
-        jPanel1.add(jpassClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 170, 30));
+        jPanel1.add(jpassClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 170, 30));
 
         jbtnAtras.setText("Atrás");
         jbtnAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -58,7 +61,7 @@ public class Registrar extends javax.swing.JFrame {
                 jbtnAtrasActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 80, -1));
+        jPanel1.add(jbtnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 80, -1));
 
         jbtnAceptar.setText("Aceptar");
         jbtnAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -67,7 +70,11 @@ public class Registrar extends javax.swing.JFrame {
                 jbtnAceptarActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 80, -1));
+        jPanel1.add(jbtnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 80, -1));
+        jPanel1.add(jtxtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 170, 30));
+
+        jcbCorreo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "@gmail.com", "@outlook.com", "@hotmail.com" }));
+        jPanel1.add(jcbCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 100, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,7 +107,10 @@ public class Registrar extends javax.swing.JFrame {
         if (this.jtxtUsuario.getText().isEmpty() || this.jpassClave.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Faltan campos por llenar.", "Error.", JOptionPane.ERROR_MESSAGE);
         } else {
-            Usuario usuario = new Usuario(this.jtxtUsuario.getText(), this.jpassClave.getText());
+            String correo = this.jtxtCorreo.getText() + jcbCorreo.getSelectedItem().toString();
+            Usuario usuario = new Usuario(this.jtxtUsuario.getText(),
+                    correo,
+                    this.jpassClave.getText());
             usuarios.agregarUsuario(usuario);
             JOptionPane.showMessageDialog(null, "Usuario registrado.", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -114,8 +124,10 @@ public class Registrar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbtnAceptar;
     private javax.swing.JButton jbtnAtras;
+    private javax.swing.JComboBox<String> jcbCorreo;
     private javax.swing.JLabel jlblBienvenido;
     private javax.swing.JPasswordField jpassClave;
+    private javax.swing.JTextField jtxtCorreo;
     private javax.swing.JTextField jtxtUsuario;
     // End of variables declaration//GEN-END:variables
 }

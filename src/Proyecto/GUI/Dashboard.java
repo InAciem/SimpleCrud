@@ -1,22 +1,28 @@
 package Proyecto.GUI;
 
+import Proyecto.Clases.DatosUsuarios;
 import Proyecto.Utilidades.ResizeImg;
 import Proyecto.Clases.Usuario;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import java.awt.event.MouseListener;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 
 public class Dashboard extends javax.swing.JFrame {
-
+    private DatosUsuarios usuarios = new DatosUsuarios();
     private Usuario sesionActual = new Usuario();
     private ResizeImg img;
 
     public Dashboard() {
         initComponents();
+        for (int i = 0; i < jpbContenedor.getTabCount(); i++) {
+            jpbContenedor.setEnabledAt(i, false);
+        }
         this.jlblBloqueColor.setBackground(Color.WHITE);
         this.jlblBloqueColor.setOpaque(true);
         setLocationRelativeTo(null);
@@ -31,6 +37,8 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard(Usuario sesionActual) {
         this();
         this.sesionActual = sesionActual;
+        this.jlblSaludoEntrada.setText("¡Hola, " + this.sesionActual.getUsuario() + "!");
+        this.jlblidentificadorRol.setText("Tu rol es de: " + this.sesionActual.getRol());
         String rolActual = this.sesionActual.getRol() + "";
         switch (rolActual) {
             case "ADMIN":
@@ -39,6 +47,8 @@ public class Dashboard extends javax.swing.JFrame {
                         jlblBanner);
                 img = new ResizeImg("src/Proyecto/IMG/usericon.png",
                         jlbliconUsuario, true);
+                this.usuarios = this.usuarios.getInstancia();
+                actualizarTablaUsuarios();
                 break;
             case "USUARIO":
                 System.out.println("Ha iniciado como usuario.");
@@ -60,6 +70,8 @@ public class Dashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jpaneBase = new javax.swing.JPanel();
+        jlblSaludoEntrada = new javax.swing.JLabel();
+        jlblidentificadorRol = new javax.swing.JLabel();
         jpaneLateralIzq = new javax.swing.JPanel();
         jlblCrudTXT = new javax.swing.JLabel();
         jlblDashboardTXT = new javax.swing.JLabel();
@@ -80,15 +92,22 @@ public class Dashboard extends javax.swing.JFrame {
         jbtnEliminar = new javax.swing.JButton();
         jbtnEditar = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jtbdpUsuarios = new javax.swing.JPanel();
+        jtbdpSolicitudes = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jbdpSolicitudes = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jbdpUsuarios = new javax.swing.JPanel();
+        jscrollUsuarios = new javax.swing.JScrollPane();
+        jtableUsuarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jpaneBase.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jlblSaludoEntrada.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jpaneBase.add(jlblSaludoEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 200, 20));
+
+        jlblidentificadorRol.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jpaneBase.add(jlblidentificadorRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 180, 20));
 
         jpaneLateralIzq.setBackground(new java.awt.Color(153, 153, 255));
         jpaneLateralIzq.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -259,33 +278,31 @@ public class Dashboard extends javax.swing.JFrame {
 
         jpbContenedor.addTab("tab1", jtbdpLibros);
 
-        jtbdpUsuarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jtbdpSolicitudes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Solicitudes");
-        jtbdpUsuarios.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
+        jtbdpSolicitudes.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
 
-        jpbContenedor.addTab("tab2", jtbdpUsuarios);
+        jpbContenedor.addTab("tab2", jtbdpSolicitudes);
 
-        jLabel2.setText("Usuarios");
+        jbdpUsuarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jbdpSolicitudesLayout = new javax.swing.GroupLayout(jbdpSolicitudes);
-        jbdpSolicitudes.setLayout(jbdpSolicitudesLayout);
-        jbdpSolicitudesLayout.setHorizontalGroup(
-            jbdpSolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jbdpSolicitudesLayout.createSequentialGroup()
-                .addGap(330, 330, 330)
-                .addComponent(jLabel2)
-                .addContainerGap(415, Short.MAX_VALUE))
-        );
-        jbdpSolicitudesLayout.setVerticalGroup(
-            jbdpSolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jbdpSolicitudesLayout.createSequentialGroup()
-                .addGap(261, 261, 261)
-                .addComponent(jLabel2)
-                .addContainerGap(352, Short.MAX_VALUE))
-        );
+        jtableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jscrollUsuarios.setViewportView(jtableUsuarios);
 
-        jpbContenedor.addTab("tab3", jbdpSolicitudes);
+        jbdpUsuarios.add(jscrollUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
+
+        jpbContenedor.addTab("tab3", jbdpUsuarios);
 
         jpaneBase.add(jpbContenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 790, 660));
 
@@ -392,15 +409,28 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
     
+    public void actualizarTablaUsuarios() {
+        List<Usuario> listaUsariosParaTabla = this.usuarios.getListaUsuarios();
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Usuario");
+        model.addColumn("Correo");
+
+        for (Usuario user : listaUsariosParaTabla) {
+            model.addRow(new Object[]{user.getUsuario(), user.getCorreo()});
+        }
+
+        jtableUsuarios.setModel(model);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLblLibros;
     private javax.swing.JLabel jLblSolicitudes;
     private javax.swing.JLabel jLblUsuarios;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JPanel jbdpSolicitudes;
+    private javax.swing.JPanel jbdpUsuarios;
     private javax.swing.JButton jbtnAgregar;
     private javax.swing.JButton jbtnEditar;
     private javax.swing.JButton jbtnEliminar;
@@ -409,14 +439,18 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jlblCerrarSesion;
     private javax.swing.JLabel jlblCrudTXT;
     private javax.swing.JLabel jlblDashboardTXT;
+    private javax.swing.JLabel jlblSaludoEntrada;
     private javax.swing.JLabel jlbliconLibro;
     private javax.swing.JLabel jlbliconSolicitud;
     private javax.swing.JLabel jlbliconUsuario;
+    private javax.swing.JLabel jlblidentificadorRol;
     private javax.swing.JPanel jpaneBase;
     private javax.swing.JPanel jpaneLateralIzq;
     private javax.swing.JTabbedPane jpbContenedor;
+    private javax.swing.JScrollPane jscrollUsuarios;
+    private javax.swing.JTable jtableUsuarios;
     private javax.swing.JTable jtbLibros;
     private javax.swing.JPanel jtbdpLibros;
-    private javax.swing.JPanel jtbdpUsuarios;
+    private javax.swing.JPanel jtbdpSolicitudes;
     // End of variables declaration//GEN-END:variables
 }

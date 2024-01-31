@@ -68,4 +68,7 @@ public class DatosUsuarios {
             }
         }
     }
+    public List<Usuario> getListaUsuarios(){
+        return usuarios;
+    }
 }

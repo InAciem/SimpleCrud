@@ -16,11 +16,12 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         this.usuarios = this.usuarios.getInstancia();
         setLocationRelativeTo(null);
-        Usuario admin = new Usuario("admi", "123");
+        Usuario admin = new Usuario("admi", "admin@admin.com", "123");
         admin.convertirAdmin();
         usuarios.agregarUsuario(admin);
         TextPrompt placeholder1 = new TextPrompt("Usuario", this.jtxtUsuario);
-        TextPrompt placeholder2 = new TextPrompt("Contraseña", this.jpassClave);
+        TextPrompt placeholder2 = new TextPrompt("Correo", this.jtxtCorreo);
+        TextPrompt placeholder3 = new TextPrompt("Contraseña", this.jpassClave);
     }
 
     @SuppressWarnings("unchecked")
@@ -33,6 +34,8 @@ public class Inicio extends javax.swing.JFrame {
         jpassClave = new javax.swing.JPasswordField();
         jbtnIngresar = new javax.swing.JButton();
         jbtnRegistrar = new javax.swing.JButton();
+        jtxtCorreo = new javax.swing.JTextField();
+        jcbCorreo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,7 +57,7 @@ public class Inicio extends javax.swing.JFrame {
                 jpassClaveActionPerformed(evt);
             }
         });
-        jPanel1.add(jpassClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 170, 30));
+        jPanel1.add(jpassClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 170, 30));
 
         jbtnIngresar.setText("Ingresar");
         jbtnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -63,7 +66,7 @@ public class Inicio extends javax.swing.JFrame {
                 jbtnIngresarActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 110, -1));
+        jPanel1.add(jbtnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 110, -1));
 
         jbtnRegistrar.setText("Registrar");
         jbtnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -72,7 +75,11 @@ public class Inicio extends javax.swing.JFrame {
                 jbtnRegistrarActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, 110, -1));
+        jPanel1.add(jbtnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 110, -1));
+        jPanel1.add(jtxtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 170, 30));
+
+        jcbCorreo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "@gmail.com", "@outlook.com", "@hotmail.com" }));
+        jPanel1.add(jcbCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 110, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,8 +145,10 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbtnIngresar;
     private javax.swing.JButton jbtnRegistrar;
+    private javax.swing.JComboBox<String> jcbCorreo;
     private javax.swing.JLabel jlblBienvenido;
     private javax.swing.JPasswordField jpassClave;
+    private javax.swing.JTextField jtxtCorreo;
     private javax.swing.JTextField jtxtUsuario;
     // End of variables declaration//GEN-END:variables
 }

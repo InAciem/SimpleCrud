@@ -2,6 +2,7 @@ package Proyecto.Clases;
 
 public class Usuario {
     private String usuario;
+    private String correo;
     private String clave;
     private rol rol;
     
@@ -14,10 +15,19 @@ public class Usuario {
 
     }
     
-    public Usuario(String usuario, String clave) {
+    public Usuario(String usuario, String correo, String clave) {
         this.usuario = usuario;
+        this.correo = correo;
         this.clave = clave;
         this.rol = rol.USUARIO;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public rol getRol() {
